@@ -17,17 +17,44 @@ namespace SchoolGame
         public int gunType;
         public int fireRate;
         public bool inputActive;
+        public bool keyFalse;
 
         public player()
         {
-
+            setCoords(400, 240);
+            setSize(32, 32);
+            setSpriteCoords(1, 1);
+            inputActive = true;
+            gunType = 1;
+            fireRate = 0;
         }
 
-        public void input()
+        public void input(List<bullet> bullets) 
         {
             KeyboardState keyboard = Keyboard.GetState();
             if (inputActive)
             {
+                if (keyboard.IsKeyDown(Keys.X) && gunType == 1 && !keyFalse && fireRate == 0)
+                {
+                    bullets.Add(new bullet(x + 13, y + 13));
+                    fireRate = 1;
+                    keyFalse = true;
+                }
+                if (fireRate >= 1)
+                {
+                    fireRate += 1;
+                    if (fireRate >= 32)
+                    {
+                        fireRate = 0;
+                    }
+                }
+                if (keyFalse)
+                {
+                    if (keyboard.IsKeyUp(Keys.X))
+                    {
+                        keyFalse = false;
+                    }
+                }
                 if (keyboard.IsKeyDown(Keys.Right) && x < 800-37)
                 {
                     x += 5;
@@ -40,7 +67,7 @@ namespace SchoolGame
                 {
                     y -= 5;
                 }
-                if (keyboard.IsKeyDown(Keys.Down) && y < 800-37)
+                if (keyboard.IsKeyDown(Keys.Down) && y < 480-37)
                 {
                     y += 5;
                 }

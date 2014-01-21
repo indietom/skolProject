@@ -25,12 +25,8 @@ namespace SchoolGame
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+        List<bullet> bullets = new List<bullet>();
+        player player = new player();
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -38,15 +34,12 @@ namespace SchoolGame
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+        Texture2D spritesheet;
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            spritesheet = Content.Load<Texture2D>("spritesheet");
             // TODO: use this.Content to load your game content here
         }
 
@@ -59,18 +52,18 @@ namespace SchoolGame
             // TODO: Unload any non ContentManager content here
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            foreach (bullet b in bullets)
+            {
+                b.movment();
+            }
+            player.input(bullets);
 
             base.Update(gameTime);
         }
@@ -83,7 +76,10 @@ namespace SchoolGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            player.drawSprite(spriteBatch, spritesheet);
+            foreach (bullet b in bullets) { b.drawSprite(spriteBatch, spritesheet); }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
