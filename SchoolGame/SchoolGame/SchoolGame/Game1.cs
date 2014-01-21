@@ -26,11 +26,12 @@ namespace SchoolGame
         }
 
         List<bullet> bullets = new List<bullet>();
+        List<explosion> explosions = new List<explosion>();
         player player = new player();
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            explosions.Add(new explosion(100, 100));
             base.Initialize();
         }
 
@@ -65,6 +66,10 @@ namespace SchoolGame
             {
                 b.movment();
             }
+            foreach (explosion ex in explosions)
+            {
+                ex.animation();
+            }
             player.input(bullets);
             player.animation();
 
@@ -79,6 +84,13 @@ namespace SchoolGame
                 if (bullets[i].destroy)
                 {
                     bullets.RemoveAt(i);
+                }
+            }
+            for (int i = 0; i < explosions.Count; i++)
+            {
+                if (explosions[i].destroy)
+                {
+                    explosions.RemoveAt(i);
                 }
             }
             base.Update(gameTime);
@@ -96,6 +108,7 @@ namespace SchoolGame
             spriteBatch.Draw(space, new Vector2(spaceX, 0), Color.White);
             player.drawSprite(spriteBatch, spritesheet);
             foreach (bullet b in bullets) { b.drawSprite(spriteBatch, spritesheet); }
+            foreach (explosion ex in explosions) { ex.drawSprite(spriteBatch, spritesheet); }
             spriteBatch.End();
 
             base.Draw(gameTime);
