@@ -18,6 +18,7 @@ namespace SchoolGame
         public int fireRate;
         public bool inputActive;
         public bool keyFalse;
+        public bool buttonFalse;
 
         public player()
         {
@@ -29,6 +30,7 @@ namespace SchoolGame
             fireRate = 0;
             animationActive = true;
             animationCount = 0;
+            buttonFalse = false;
         }
         public void animation()
         {
@@ -52,6 +54,7 @@ namespace SchoolGame
         public void input(List<bullet> bullets) 
         {
             KeyboardState keyboard = Keyboard.GetState();
+            GamePadState gamePad = GamePad.GetState(PlayerIndex.One);
             if (inputActive)
             {
                 if (keyboard.IsKeyDown(Keys.X) && gunType == 1 && !keyFalse && fireRate == 0)
@@ -59,6 +62,12 @@ namespace SchoolGame
                     bullets.Add(new bullet(x + 13, y + 13));
                     fireRate = 1;
                     keyFalse = true;
+                }
+                if (gamePad.Buttons.A == ButtonState.Pressed && gunType == 1 && !buttonFalse && fireRate == 0)
+                {
+                    bullets.Add(new bullet(x + 13, y + 13));
+                    fireRate = 1;
+                    buttonFalse = true;
                 }
                 if (fireRate >= 1)
                 {
@@ -75,19 +84,26 @@ namespace SchoolGame
                         keyFalse = false;
                     }
                 }
-                if (keyboard.IsKeyDown(Keys.Right) && x < 800-37)
+                if (buttonFalse)
+                {
+                    if (gamePad.Buttons.A == ButtonState.Released)
+                    {
+                        buttonFalse = false;
+                    }
+                }
+                if (keyboard.IsKeyDown(Keys.Right) || gamePad.DPad.Right == ButtonState.Pressed && x < 800-37)
                 {
                     x += 5;
                 }
-                if (keyboard.IsKeyDown(Keys.Left) && x > 0)
+                if (keyboard.IsKeyDown(Keys.Left) || gamePad.DPad.Left == ButtonState.Pressed && x > 0)
                 {
                     x -= 5;
                 }
-                if (keyboard.IsKeyDown(Keys.Up) && y > 0)
+                if (keyboard.IsKeyDown(Keys.Up) || gamePad.DPad.Up == ButtonState.Pressed && y > 0)
                 {
                     y -= 5;
                 }
-                if (keyboard.IsKeyDown(Keys.Down) && y < 480-37)
+                if (keyboard.IsKeyDown(Keys.Down) || gamePad.DPad.Down == ButtonState.Pressed && y < 480 - 37)
                 {
                     y += 5;
                 }

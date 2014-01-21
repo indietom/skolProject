@@ -26,7 +26,7 @@ namespace SchoolGame
         {
             switch (type)
             {
-                case 1:
+                case 1: 
                     x += veclocity_x;
                     y += veclocity_y;
                     break;
