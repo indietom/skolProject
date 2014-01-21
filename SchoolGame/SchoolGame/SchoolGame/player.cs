@@ -26,7 +26,7 @@ namespace SchoolGame
             setSize(32, 32);
             setSpriteCoords(1, 1);
             inputActive = true;
-            gunType = 1;
+            gunType = 2;
             fireRate = 0;
             animationActive = true;
             animationCount = 0;
@@ -59,13 +59,29 @@ namespace SchoolGame
             {
                 if (keyboard.IsKeyDown(Keys.X) && gunType == 1 && !keyFalse && fireRate == 0)
                 {
-                    bullets.Add(new bullet(x + 13, y + 13));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
                     fireRate = 1;
                     keyFalse = true;
                 }
                 if (gamePad.Buttons.A == ButtonState.Pressed && gunType == 1 && !buttonFalse && fireRate == 0)
                 {
-                    bullets.Add(new bullet(x + 13, y + 13));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
+                    fireRate = 1;
+                    buttonFalse = true;
+                }
+                if (keyboard.IsKeyDown(Keys.X) && gunType == 2 && !keyFalse && fireRate == 0)
+                {
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, -25));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 25));
+                    fireRate = 1;
+                    keyFalse = true;
+                }
+                if (gamePad.Buttons.A == ButtonState.Pressed && gunType == 2 && !buttonFalse && fireRate == 0)
+                {
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, -25));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 25));
                     fireRate = 1;
                     buttonFalse = true;
                 }
@@ -91,19 +107,19 @@ namespace SchoolGame
                         buttonFalse = false;
                     }
                 }
-                if (keyboard.IsKeyDown(Keys.Right) || gamePad.DPad.Right == ButtonState.Pressed && x < 800-37)
+                if ( x < 800-37 && keyboard.IsKeyDown(Keys.Right) || gamePad.DPad.Right == ButtonState.Pressed && x < 800-37)
                 {
                     x += 5;
                 }
-                if (keyboard.IsKeyDown(Keys.Left) || gamePad.DPad.Left == ButtonState.Pressed && x > 0)
+                if (x > 0 && keyboard.IsKeyDown(Keys.Left) || gamePad.DPad.Left == ButtonState.Pressed && x > 0)
                 {
                     x -= 5;
                 }
-                if (keyboard.IsKeyDown(Keys.Up) || gamePad.DPad.Up == ButtonState.Pressed && y > 0)
+                if (y > 0 && keyboard.IsKeyDown(Keys.Up) || gamePad.DPad.Up == ButtonState.Pressed && y > 0)
                 {
                     y -= 5;
                 }
-                if (keyboard.IsKeyDown(Keys.Down) || gamePad.DPad.Down == ButtonState.Pressed && y < 480 - 37)
+                if (y < 480 - 37 && keyboard.IsKeyDown(Keys.Down) || gamePad.DPad.Down == ButtonState.Pressed && y < 480 - 37)
                 {
                     y += 5;
                 }
