@@ -35,11 +35,13 @@ namespace SchoolGame
         }
 
         Texture2D spritesheet;
+        Texture2D space;
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spritesheet = Content.Load<Texture2D>("spritesheet");
+            space = Content.Load<Texture2D>("space");
             // TODO: use this.Content to load your game content here
         }
 
@@ -52,7 +54,7 @@ namespace SchoolGame
             // TODO: Unload any non ContentManager content here
         }
 
-        
+        int spaceX = 0;
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
@@ -64,7 +66,19 @@ namespace SchoolGame
                 b.movment();
             }
             player.input(bullets);
+            spaceX -= 1;
 
+            if (spaceX == -800)
+            {
+                spaceX = 0;
+            }
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                if (bullets[i].destroy)
+                {
+                    bullets.RemoveAt(i);
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -77,6 +91,7 @@ namespace SchoolGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
+            spriteBatch.Draw(space, new Vector2(spaceX, 0), Color.White);
             player.drawSprite(spriteBatch, spritesheet);
             foreach (bullet b in bullets) { b.drawSprite(spriteBatch, spritesheet); }
             spriteBatch.End();
