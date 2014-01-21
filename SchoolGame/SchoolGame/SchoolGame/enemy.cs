@@ -12,15 +12,23 @@ namespace SchoolGame
 
         public enemy(float x2, float y2, int type2)
         {
+            Random random = new Random();
+            setSize(32, 32);
             switch (type2)
             {
                 case 1:
+                    setSpriteCoords(1, 67);
+                    angle = random.Next(-200, -160);
                     break;
             }
         }
         public void movment()
         {
+            switch (type)
+            {
 
+            }
+            math(8);
         }
     }
 }

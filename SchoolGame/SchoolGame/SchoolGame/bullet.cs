@@ -10,7 +10,7 @@ namespace SchoolGame
         public bullet(float x2, float y2)
         {
             setCoords(x2, y2);
-            setSpriteCoords(34, 1);
+            setSpriteCoords(100, 1);
             setSize(3, 3);
             destroy = false;
         }

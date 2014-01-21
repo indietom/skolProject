@@ -108,6 +108,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="bullet.cs" />
+    <Compile Include="enemy.cs" />
+    <Compile Include="explosion.cs" />
     <Compile Include="objects.cs" />
     <Compile Include="player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

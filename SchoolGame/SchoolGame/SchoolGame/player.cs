@@ -27,8 +27,28 @@ namespace SchoolGame
             inputActive = true;
             gunType = 1;
             fireRate = 0;
+            animationActive = true;
+            animationCount = 0;
         }
-
+        public void animation()
+        {
+            if (animationActive)
+            {
+                animationCount += 1;
+                if (animationCount >= 10)
+                {
+                    imx = 34;
+                }
+                if (animationCount >= 20)
+                {
+                    animationCount = 0;
+                }
+                if (animationCount == 0)
+                {
+                    imx = 1;
+                }
+            }
+        }
         public void input(List<bullet> bullets) 
         {
             KeyboardState keyboard = Keyboard.GetState();

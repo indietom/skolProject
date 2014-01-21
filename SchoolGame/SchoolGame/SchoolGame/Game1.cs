@@ -66,6 +66,8 @@ namespace SchoolGame
                 b.movment();
             }
             player.input(bullets);
+            player.animation();
+
             spaceX -= 1;
 
             if (spaceX == -800)
