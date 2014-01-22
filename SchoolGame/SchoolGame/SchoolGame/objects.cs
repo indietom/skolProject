@@ -54,12 +54,14 @@ namespace SchoolGame
         {
             spriteBatch.Draw(spritesheet, new Vector2(x, y), new Rectangle(imx, imy, widht, height), Color.White);
         }
-        public void math(int speed2)
+        public void math(float speed2)
         {
             angle2 = (angle * (float)Math.PI / 180);
             speed = speed2;
-            veclocity_x = (speed * (float)Math.Cos(angle));
-            veclocity_y = (speed * (float)Math.Sin(angle));
+            scale_x = (float)Math.Cos(angle2);
+            scale_y = (float)Math.Sin(angle2);
+            veclocity_x = (speed * scale_x);
+            veclocity_y = (speed * scale_y);
         }
     }
 }

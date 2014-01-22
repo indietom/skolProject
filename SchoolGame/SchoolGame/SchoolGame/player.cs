@@ -26,7 +26,7 @@ namespace SchoolGame
             setSize(32, 32);
             setSpriteCoords(1, 1);
             inputActive = true;
-            gunType = 2;
+            gunType = 1;
             fireRate = 0;
             animationActive = true;
             animationCount = 0;
@@ -76,6 +76,16 @@ namespace SchoolGame
                     bullets.Add(new bullet(x + 13, y + 13, 1, 25));
                     fireRate = 1;
                     keyFalse = true;
+                }
+                if (keyboard.IsKeyDown(Keys.X) && gunType == 3 && fireRate == 0)
+                {
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
+                    fireRate = 20;
+                }
+                if (gamePad.Buttons.A == ButtonState.Pressed && gunType == 3 && fireRate == 0)
+                {
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
+                    fireRate = 20;
                 }
                 if (gamePad.Buttons.A == ButtonState.Pressed && gunType == 2 && !buttonFalse && fireRate == 0)
                 {

@@ -27,11 +27,12 @@ namespace SchoolGame
 
         List<bullet> bullets = new List<bullet>();
         List<explosion> explosions = new List<explosion>();
+        List<enemy> enemies = new List<enemy>();
         player player = new player();
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            explosions.Add(new explosion(100, 100));
+            enemies.Add(new enemy(700, 200, 2));
             base.Initialize();
         }
 
@@ -54,13 +55,37 @@ namespace SchoolGame
         {
             // TODO: Unload any non ContentManager content here
         }
-
+        public bool collision(ref Rectangle object1, ref Rectangle object2)
+        {
+            if (object1.Y >= object2.Y + object2.Height)
+                return false;
+            if (object1.X >= object2.X + object2.Width)
+                return false;
+            if (object1.Y + object1.Height <= object2.Y)
+                return false;
+            if (object1.X + object1.Width <= object2.X)
+                return false;
+            return true;
+        }
         int spaceX = 0;
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+
+            KeyboardState keyboard = Keyboard.GetState();
+
+            if (keyboard.IsKeyDown(Keys.Escape))
+            {
+                this.Exit();
+            }
+
+            foreach (enemy e in enemies)
+            {
+                e.movment();
+                e.checkHealth(explosions);
+            }
 
             foreach (bullet b in bullets)
             {
@@ -70,6 +95,7 @@ namespace SchoolGame
             {
                 ex.animation();
             }
+
             player.input(bullets);
             player.animation();
 
@@ -103,11 +129,11 @@ namespace SchoolGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
             spriteBatch.Begin();
             spriteBatch.Draw(space, new Vector2(spaceX, 0), Color.White);
             player.drawSprite(spriteBatch, spritesheet);
             foreach (bullet b in bullets) { b.drawSprite(spriteBatch, spritesheet); }
+            foreach (enemy e in enemies) { e.drawSprite(spriteBatch, spritesheet); }
             foreach (explosion ex in explosions) { ex.drawSprite(spriteBatch, spritesheet); }
             spriteBatch.End();
 
