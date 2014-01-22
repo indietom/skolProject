@@ -51,6 +51,7 @@ namespace SchoolGame
                     math(8);
                     break;
                 case 2:
+                    x -= 1;
                     angle -= 5;
                     x += veclocity_x;
                     y += veclocity_y;
