@@ -25,6 +25,8 @@ namespace SchoolGame
                     break;
                 case 2:
                     accel = 0.1f;
+                    setSpriteCoords(133,1);
+                    setSize(18, 9);
                     break;
             }
         }
