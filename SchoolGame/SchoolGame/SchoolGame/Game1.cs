@@ -32,7 +32,7 @@ namespace SchoolGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            enemies.Add(new enemy(700, 200, 2));
+            enemies.Add(new enemy(700, 200, 1));
             base.Initialize();
         }
 
@@ -76,6 +76,10 @@ namespace SchoolGame
 
             KeyboardState keyboard = Keyboard.GetState();
 
+            Rectangle playerC = new Rectangle((int)player.x + 7, (int)player.y + 9, 8, 9);
+            Rectangle bulletC;
+            Rectangle enemyC;
+
             if (keyboard.IsKeyDown(Keys.Escape))
             {
                 this.Exit();
@@ -85,6 +89,24 @@ namespace SchoolGame
             {
                 e.movment();
                 e.checkHealth(explosions);
+                enemyC = new Rectangle((int)e.x,(int)e.y,32, 32);
+                foreach (bullet b in bullets)
+                {
+                    bulletC = new Rectangle();
+                    if (b.type == 1)
+                    {
+                        bulletC = new Rectangle((int)b.x, (int)b.y, 3, 3);
+                    }
+                    if (b.type == 2)
+                    {
+                        bulletC = new Rectangle((int)b.x, (int)b.y, 18, 9);
+                    }
+                    if (collision(ref enemyC, ref bulletC))
+                    {
+                        b.destroy = true;
+                        e.hp -= 1;
+                    }
+                }
             }
 
             foreach (bullet b in bullets)
@@ -117,6 +139,20 @@ namespace SchoolGame
                 if (explosions[i].destroy)
                 {
                     explosions.RemoveAt(i);
+                }
+            }
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                if (bullets[i].destroy)
+                {
+                    bullets.RemoveAt(i);
+                }
+            }
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                if (enemies[i].destroy)
+                {
+                    enemies.RemoveAt(i);
                 }
             }
             base.Update(gameTime);

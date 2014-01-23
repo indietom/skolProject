@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="astroid.cs" />
     <Compile Include="bullet.cs" />
     <Compile Include="enemy.cs" />
     <Compile Include="enemyManeger.cs" />

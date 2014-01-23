@@ -77,7 +77,7 @@ namespace SchoolGame
                 }
                 if (gamePad.Buttons.A == ButtonState.Pressed && gunType == 4 && !buttonFalse && fireRate == 0)
                 {
-                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
+                    bullets.Add(new bullet(x + 13, y + 13,2, 0));
                     fireRate = 1;
                     buttonFalse = true;
                 }

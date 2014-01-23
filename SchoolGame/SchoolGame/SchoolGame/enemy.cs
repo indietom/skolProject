@@ -16,6 +16,7 @@ namespace SchoolGame
             setSize(32, 32);
             type = type2;
             setCoords(x2, y2);
+            destroy = false;
             switch (type)
             {
                 case 1:
@@ -34,7 +35,8 @@ namespace SchoolGame
         {
             if (hp <= 0)
             {
-                explosions.Add(new explosion(x - 16, y - 16));
+                explosions.Add(new explosion(x, y));
+                destroy = true;
             }
         }
         public void movment()
@@ -48,7 +50,7 @@ namespace SchoolGame
                 case 1: 
                     x += veclocity_x;
                     y += veclocity_y;
-                    math(8);
+                    math(0);
                     break;
                 case 2:
                     x -= 1;
