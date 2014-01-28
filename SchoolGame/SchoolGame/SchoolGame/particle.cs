@@ -9,14 +9,25 @@ namespace SchoolGame
     {
         public float accel;
         public int type;
-        public particle(float x2, float y2, float angValue, float accel2, int type2)
+        public string color;
+        public particle(float x2, float y2, float angValue, float accel2, int type2, string color2)
         {
             setCoords(x2, y2);
             setSize(4, 4);
-            setSpriteCoords(100, 7);
             type = type2;
             accel = accel2;
             angle = angValue;
+            color = color2;
+            switch (color)
+            {
+                case "red":
+                    setSpriteCoords(100, 7);
+                    break;
+                case "smoke":
+                    setSize(8, 8);
+                    setSpriteCoords(100, 11);
+                    break;
+            }
         }
         public void movment()
         {

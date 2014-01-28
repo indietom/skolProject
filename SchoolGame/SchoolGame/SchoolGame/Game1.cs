@@ -88,7 +88,7 @@ namespace SchoolGame
 
             for (int i = 0; i < 2; i++)
             {
-                particles.Add(new particle(player.x, player.y+13, ranodm.Next(-200, -160), ranodm.Next(5, 10), 1));
+                particles.Add(new particle(player.x, player.y+13, ranodm.Next(-200, -160), ranodm.Next(5, 10), 1, "red"));
             }
 
             foreach (particle p in particles)
@@ -121,7 +121,7 @@ namespace SchoolGame
 
             foreach (bullet b in bullets)
             {
-                b.movment();
+                b.movment(particles);
             }
             foreach (explosion ex in explosions)
             {
