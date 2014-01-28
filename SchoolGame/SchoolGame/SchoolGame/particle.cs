@@ -31,6 +31,10 @@ namespace SchoolGame
         }
         public void movment()
         {
+            if (x < 0 || x > 800 || y < 0 || y > 480)
+            {
+                destroy = true;
+            }
             switch (type)
             {
                 case 1:

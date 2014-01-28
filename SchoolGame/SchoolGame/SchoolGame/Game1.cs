@@ -165,6 +165,13 @@ namespace SchoolGame
                     enemies.RemoveAt(i);
                 }
             }
+            for (int i = 0; i < particles.Count; i++)
+            {
+                if (particles[i].destroy)
+                {
+                    particles.RemoveAt(i);
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -177,11 +184,11 @@ namespace SchoolGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
             spriteBatch.Draw(space, new Vector2(spaceX, 0), Color.White);
+            foreach (particle p in particles) { p.drawSprite(spriteBatch, spritesheet); }
             player.drawSprite(spriteBatch, spritesheet);
             foreach (bullet b in bullets) { b.drawSprite(spriteBatch, spritesheet); }
             foreach (enemy e in enemies) { e.drawSprite(spriteBatch, spritesheet); }
             foreach (explosion ex in explosions) { ex.drawSprite(spriteBatch, spritesheet); }
-            foreach (particle p in particles) { p.drawSprite(spriteBatch, spritesheet); }
             spriteBatch.End();
 
             base.Draw(gameTime);
