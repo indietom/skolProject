@@ -29,7 +29,7 @@ namespace SchoolGame
                     break;
             }
         }
-        public void checkHealth(List<astroid> astroids, List<explosion> explosions)
+        public void checkHealth(List<astroid> astroids, List<explosion> explosions, List<particle> particles)
         {
             if (hp <= 0 && size == 32)
             {
@@ -45,7 +45,7 @@ namespace SchoolGame
             }
             if (hp <= 0 && size == 8)
             {
-                explosions.Add(new explosion(x - 16, y - 16));
+                explosions.Add(new explosion(x - 16, y - 16, particles));
                 destroy = true;
             }
         }

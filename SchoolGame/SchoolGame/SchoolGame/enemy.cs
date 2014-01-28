@@ -35,11 +35,6 @@ namespace SchoolGame
         {
             if (hp <= 0)
             {
-                Random random = new Random();
-                for (int i = 0; i < 10; i++)
-                {
-                    particles.Add(new particle(x + 16, y + 16, random.Next(360), random.Next(5, 10), 1, "red"));
-                }
                 switch (type)
                 {
                     case 1:
@@ -52,7 +47,7 @@ namespace SchoolGame
                         score += 3000;
                         break;
                 }
-                explosions.Add(new explosion(x, y));
+                explosions.Add(new explosion(x, y, particles));
                 destroy = true;
             }
         }

@@ -5,12 +5,12 @@ using System.Text;
 
 namespace SchoolGame
 {
-    class enemyManeger
+    class enemyManeger:objects
     {
-
-        public void spawnEnemies()
+        public int spawnEnemy;
+        public void spawnEnemies(ref int level)
         {
-
+            //spawnEnemy 
         }
     }
 }
