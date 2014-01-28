@@ -16,6 +16,7 @@ namespace SchoolGame
     {
         public int gunType;
         public int fireRate;
+        public int score;
         public bool inputActive;
         public bool keyFalse;
         public bool buttonFalse;
@@ -27,6 +28,7 @@ namespace SchoolGame
             setSpriteCoords(1, 1);
             inputActive = true;
             gunType = 4;
+            score = 0;
             fireRate = 0;
             animationActive = true;
             animationCount = 0;

@@ -31,10 +31,22 @@ namespace SchoolGame
                     break;
             }
         }
-        public void checkHealth(List<explosion> explosions)
+        public void checkHealth(List<explosion> explosions, ref int score)
         {
             if (hp <= 0)
             {
+                switch (type)
+                {
+                    case 1:
+                        score += 1000;
+                        break;
+                    case 2:
+                        score += 2000;
+                        break;
+                    case 3:
+                        score += 3000;
+                        break;
+                }
                 explosions.Add(new explosion(x, y));
                 destroy = true;
             }

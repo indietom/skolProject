@@ -113,6 +113,7 @@
     <Compile Include="enemyManeger.cs" />
     <Compile Include="explosion.cs" />
     <Compile Include="objects.cs" />
+    <Compile Include="particle.cs" />
     <Compile Include="player.cs" />
     <Compile Include="powerUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -28,6 +28,7 @@ namespace SchoolGame
         List<bullet> bullets = new List<bullet>();
         List<explosion> explosions = new List<explosion>();
         List<enemy> enemies = new List<enemy>();
+        List<particle> particles = new List<particle>();
         player player = new player();
         protected override void Initialize()
         {
@@ -88,7 +89,7 @@ namespace SchoolGame
             foreach (enemy e in enemies)
             {
                 e.movment();
-                e.checkHealth(explosions);
+                e.checkHealth(explosions, ref player.score);
                 enemyC = new Rectangle((int)e.x,(int)e.y,32, 32);
                 foreach (bullet b in bullets)
                 {
