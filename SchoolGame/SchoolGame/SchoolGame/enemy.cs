@@ -31,10 +31,15 @@ namespace SchoolGame
                     break;
             }
         }
-        public void checkHealth(List<explosion> explosions, ref int score)
+        public void checkHealth(List<explosion> explosions, List<particle> particles, ref int score)
         {
             if (hp <= 0)
             {
+                Random random = new Random();
+                for (int i = 0; i < 10; i++)
+                {
+                    particles.Add(new particle(x + 16, y + 16, random.Next(360), random.Next(5, 10), 1));
+                }
                 switch (type)
                 {
                     case 1:

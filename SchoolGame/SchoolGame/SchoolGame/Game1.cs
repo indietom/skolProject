@@ -71,7 +71,7 @@ namespace SchoolGame
         int spaceX = 0;
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
+            Random ranodm = new Random();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
@@ -86,10 +86,19 @@ namespace SchoolGame
                 this.Exit();
             }
 
+            for (int i = 0; i < 2; i++)
+            {
+                particles.Add(new particle(player.x, player.y+13, ranodm.Next(-200, -160), ranodm.Next(5, 10), 1));
+            }
+
+            foreach (particle p in particles)
+            {
+                p.movment();
+            }
             foreach (enemy e in enemies)
             {
                 e.movment();
-                e.checkHealth(explosions, ref player.score);
+                e.checkHealth(explosions, particles, ref player.score);
                 enemyC = new Rectangle((int)e.x,(int)e.y,32, 32);
                 foreach (bullet b in bullets)
                 {
@@ -172,6 +181,7 @@ namespace SchoolGame
             foreach (bullet b in bullets) { b.drawSprite(spriteBatch, spritesheet); }
             foreach (enemy e in enemies) { e.drawSprite(spriteBatch, spritesheet); }
             foreach (explosion ex in explosions) { ex.drawSprite(spriteBatch, spritesheet); }
+            foreach (particle p in particles) { p.drawSprite(spriteBatch, spritesheet); }
             spriteBatch.End();
 
             base.Draw(gameTime);
