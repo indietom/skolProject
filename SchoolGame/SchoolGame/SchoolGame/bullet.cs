@@ -41,7 +41,7 @@ namespace SchoolGame
                     math(11);
                     break;
                 case 2:
-                    particles.Add(new particle(x, y, random.Next(-200, -160), random.Next(5, 7), 1, "smoke"));
+                    particles.Add(new particle(x, y, random.Next(-190, -170), random.Next(5, 7), 1, "smoke"));
                     x += veclocity_x;
                     y += veclocity_y;
                     if (accel <= 10f)
