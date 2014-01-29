@@ -110,8 +110,10 @@
     <Compile Include="astroid.cs" />
     <Compile Include="bullet.cs" />
     <Compile Include="enemy.cs" />
+    <Compile Include="enemyBullet.cs" />
     <Compile Include="enemyManeger.cs" />
     <Compile Include="explosion.cs" />
+    <Compile Include="mech.cs" />
     <Compile Include="objects.cs" />
     <Compile Include="particle.cs" />
     <Compile Include="player.cs" />

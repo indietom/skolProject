@@ -29,11 +29,12 @@ namespace SchoolGame
         List<explosion> explosions = new List<explosion>();
         List<enemy> enemies = new List<enemy>();
         List<particle> particles = new List<particle>();
+        List<mech> mechs = new List<mech>();
         player player = new player();
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            enemies.Add(new enemy(700, 200, 1));
+            mechs.Add(new mech());
             base.Initialize();
         }
 
@@ -85,10 +86,12 @@ namespace SchoolGame
             {
                 this.Exit();
             }
+            
+            particles.Add(new particle(player.x+7, player.y+13, ranodm.Next(-200, -160), ranodm.Next(5, 10), 1, "red"));
 
-            for (int i = 0; i < 2; i++)
+            foreach (mech m in mechs)
             {
-                particles.Add(new particle(player.x, player.y+13, ranodm.Next(-200, -160), ranodm.Next(5, 10), 1, "red"));
+                m.movment();
             }
 
             foreach (particle p in particles)
@@ -186,6 +189,7 @@ namespace SchoolGame
             spriteBatch.Draw(space, new Vector2(spaceX, 0), Color.White);
             foreach (particle p in particles) { p.drawSprite(spriteBatch, spritesheet); }
             player.drawSprite(spriteBatch, spritesheet);
+            foreach (mech m in mechs) { m.drawSprite(spriteBatch, spritesheet); }
             foreach (bullet b in bullets) { b.drawSprite(spriteBatch, spritesheet); }
             foreach (enemy e in enemies) { e.drawSprite(spriteBatch, spritesheet); }
             foreach (explosion ex in explosions) { ex.drawSprite(spriteBatch, spritesheet); }
