@@ -27,7 +27,36 @@ namespace SchoolGame
                         mechs.Add(new mech());
                     }
                 }
-                
+            }
+            if (level == 2)
+            {
+                if (spawnEnemy == 32 * 7)
+                {
+                    enemies.Add(new enemy(random.Next(850, 950), random.Next(0, 480 - 32), random.Next(1, 3)));
+                }
+                if (spawnEnemy == 32 * 15 && mechs.Count() > 1)
+                {
+                    ifSpawnMech = random.Next(1, 4);
+                    if (ifSpawnMech == 1)
+                    {
+                        mechs.Add(new mech());
+                    }
+                }
+            }
+            if (level == 3)
+            {
+                if (spawnEnemy == 32 * 5)
+                {
+                    enemies.Add(new enemy(random.Next(850, 950), random.Next(0, 480 - 32), random.Next(1, 3)));
+                }
+                if (spawnEnemy == 32 * 15 && mechs.Count() > 1)
+                {
+                    ifSpawnMech = random.Next(1, 3);
+                    if (ifSpawnMech == 1)
+                    {
+                        mechs.Add(new mech());
+                    }
+                }
             }
         }
     }
