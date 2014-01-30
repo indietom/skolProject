@@ -149,7 +149,10 @@ namespace SchoolGame
                     }
                     if (collision(ref enemyC, ref bulletC))
                     {
-                        hitEffects.Add(new hitEffect(e.x, e.y));
+                        if (e.hp != 1)
+                        {
+                            hitEffects.Add(new hitEffect(e.x, e.y));
+                        }
                         b.destroy = true;
                         e.hp -= 1;
                     }
