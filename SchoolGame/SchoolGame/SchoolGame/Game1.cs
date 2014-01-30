@@ -34,6 +34,7 @@ namespace SchoolGame
         List<hitEffect> hitEffects = new List<hitEffect>();
         player player = new player();
         healthBar healthBar = new healthBar();
+        enemyManeger enemyManeger = new enemyManeger();
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -74,6 +75,7 @@ namespace SchoolGame
         }
         int spaceX = 0;
         public string gameState = "game";
+        int level = 1;
         protected override void Update(GameTime gameTime)
         {
             Random ranodm = new Random();
@@ -98,6 +100,8 @@ namespace SchoolGame
 
 
                     particles.Add(new particle(player.x + 7, player.y + 13, ranodm.Next(-200, -160), ranodm.Next(5, 10), 1, "red"));
+
+                    enemyManeger.spawnEnemies(ref level, mechs, enemies);
 
                     foreach (enemyBullet eb in enemyBullets)
                     {

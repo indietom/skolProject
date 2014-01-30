@@ -9,17 +9,25 @@ namespace SchoolGame
     {
         public int spawnEnemy;
         public int ifSpawnMech;
+
+        public enemyManeger()
+        {
+            spawnEnemy = 0;
+            ifSpawnMech = 0;
+        }
+
         public void spawnEnemies(ref int level, List<mech> mechs, List<enemy> enemies)
         {
             Random random = new Random();
             spawnEnemy += 1;
             if (level == 1)
             {
-                if (spawnEnemy == 32 * 10)
+                Console.WriteLine(spawnEnemy);
+                if (spawnEnemy == 32*5)
                 {
                     enemies.Add(new enemy(random.Next(850, 950), random.Next(0, 480 - 32), random.Next(1,3)));
                 }
-                if (spawnEnemy == 32 * 15 && mechs.Count() > 1)
+                if (spawnEnemy == 32 * 5 + 16 && mechs.Count() > 1)
                 {
                     ifSpawnMech = random.Next(1, 5);
                     if (ifSpawnMech == 1)
@@ -27,35 +35,41 @@ namespace SchoolGame
                         mechs.Add(new mech());
                     }
                 }
+                if (spawnEnemy == 32 * 5 + 17)
+                {
+                    spawnEnemy = 0;
+                }
             }
             if (level == 2)
             {
-                if (spawnEnemy == 32 * 7)
+                if (spawnEnemy == 32 * 4)
                 {
                     enemies.Add(new enemy(random.Next(850, 950), random.Next(0, 480 - 32), random.Next(1, 3)));
                 }
-                if (spawnEnemy == 32 * 15 && mechs.Count() > 1)
+                if (spawnEnemy == 32 * 6 && mechs.Count() > 1)
                 {
                     ifSpawnMech = random.Next(1, 4);
                     if (ifSpawnMech == 1)
                     {
                         mechs.Add(new mech());
                     }
+                    spawnEnemy = 0;
                 }
             }
             if (level == 3)
             {
-                if (spawnEnemy == 32 * 5)
+                if (spawnEnemy == 32 * 3)
                 {
                     enemies.Add(new enemy(random.Next(850, 950), random.Next(0, 480 - 32), random.Next(1, 3)));
                 }
-                if (spawnEnemy == 32 * 15 && mechs.Count() > 1)
+                if (spawnEnemy == 32 * 4 && mechs.Count() > 1)
                 {
                     ifSpawnMech = random.Next(1, 3);
                     if (ifSpawnMech == 1)
                     {
                         mechs.Add(new mech());
                     }
+                    spawnEnemy = 0;
                 }
             }
         }

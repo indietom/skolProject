@@ -67,14 +67,14 @@ namespace SchoolGame
                     break;
                 case 2:
                     x -= 1;
-                    angle -= 5;
+                    angle -= 10;
                     x += veclocity_x;
                     y += veclocity_y;
                     math(8);
                     break;
                 case 3:
                     fireRate += 1;
-                    if (fireRate == 32)
+                    if (fireRate == 32*2+16)
                     {
                         enemyBullets.Add(new enemyBullet(x + 16, y + 16, 2));
                         fireRate = 0;
