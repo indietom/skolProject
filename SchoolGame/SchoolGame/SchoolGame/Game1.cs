@@ -72,6 +72,7 @@ namespace SchoolGame
             return true;
         }
         int spaceX = 0;
+        public string gameState = "game";
         protected override void Update(GameTime gameTime)
         {
             Random ranodm = new Random();
@@ -80,152 +81,161 @@ namespace SchoolGame
 
             KeyboardState keyboard = Keyboard.GetState();
 
-            Rectangle playerC = new Rectangle((int)player.x + 7, (int)player.y + 9, 8, 9);
-            Rectangle bulletC;
-            Rectangle enemyC;
-            Rectangle mechC;
-
             if (keyboard.IsKeyDown(Keys.Escape))
             {
                 this.Exit();
             }
-            
-            particles.Add(new particle(player.x+7, player.y+13, ranodm.Next(-200, -160), ranodm.Next(5, 10), 1, "red"));
 
-            foreach (enemyBullet eb in enemyBullets)
+            switch(gameState)
             {
-                eb.movment(particles);
-            }
+                case "game":
+                    Rectangle playerC = new Rectangle((int)player.x + 7, (int)player.y + 9, 8, 9);
+                    Rectangle bulletC;
+                    Rectangle enemyC;
+                    Rectangle mechC;
 
-            foreach (hitEffect he in hitEffects)
-            {
-                he.checkLifeTime();
-            }
 
-            foreach (mech m in mechs)
-            {
-                m.movment(enemyBullets);
-                m.checkHealth(explosions, particles);
-                mechC = new Rectangle((int)m.x + 13, (int)m.y + 2, 9, 40);
-                foreach (bullet b in bullets)
-                {
-                    bulletC = new Rectangle();
-                    if (b.type == 1)
-                    {
-                        bulletC = new Rectangle((int)b.x, (int)b.y, 3, 3);
-                    }
-                    if (b.type == 2)
-                    {
-                        bulletC = new Rectangle((int)b.x, (int)b.y, 18, 9);
-                    }
-                    if (collision(ref mechC, ref bulletC))
-                    {
-                        hitEffects.Add(new hitEffect(m.x, m.y));
-                        b.destroy = true;
-                        m.hp -= 1;
-                    }
-                }
-            }
+                    particles.Add(new particle(player.x + 7, player.y + 13, ranodm.Next(-200, -160), ranodm.Next(5, 10), 1, "red"));
 
-            foreach (particle p in particles)
-            {
-                p.movment();
-            }
-            foreach (enemy e in enemies)
-            {
-                e.movment();
-                e.checkHealth(explosions, particles, ref player.score);
-                enemyC = new Rectangle((int)e.x,(int)e.y,32, 32);
-                foreach (bullet b in bullets)
-                {
-                    bulletC = new Rectangle();
-                    if (b.type == 1)
+                    foreach (enemyBullet eb in enemyBullets)
                     {
-                        bulletC = new Rectangle((int)b.x, (int)b.y, 3, 3);
+                        eb.movment(particles);
                     }
-                    if (b.type == 2)
+
+                    foreach (hitEffect he in hitEffects)
                     {
-                        bulletC = new Rectangle((int)b.x, (int)b.y, 18, 9);
+                        he.checkLifeTime();
                     }
-                    if (collision(ref enemyC, ref bulletC))
+
+                    foreach (mech m in mechs)
                     {
-                        if (e.hp != 1)
+                        m.movment(enemyBullets);
+                        m.checkHealth(explosions, particles);
+                        mechC = new Rectangle((int)m.x + 13, (int)m.y + 2, 9, 40);
+                        foreach (bullet b in bullets)
                         {
-                            hitEffects.Add(new hitEffect(e.x, e.y));
+                            bulletC = new Rectangle();
+                            if (b.type == 1)
+                            {
+                                bulletC = new Rectangle((int)b.x, (int)b.y, 3, 3);
+                            }
+                            if (b.type == 2)
+                            {
+                                bulletC = new Rectangle((int)b.x, (int)b.y, 18, 9);
+                            }
+                            if (collision(ref mechC, ref bulletC))
+                            {
+                                if (m.hp != 1)
+                                {
+                                    hitEffects.Add(new hitEffect(m.x, m.y));
+                                }
+                                b.destroy = true;
+                                m.hp -= 1;
+                            }
                         }
-                        b.destroy = true;
-                        e.hp -= 1;
                     }
-                }
-            }
 
-            foreach (bullet b in bullets)
-            {
-                b.movment(particles);
-            }
-            foreach (explosion ex in explosions)
-            {
-                ex.animation();
-            }
+                    foreach (particle p in particles)
+                    {
+                        p.movment();
+                    }
+                    foreach (enemy e in enemies)
+                    {
+                        e.movment();
+                        e.checkHealth(explosions, particles, ref player.score);
+                        enemyC = new Rectangle((int)e.x, (int)e.y, 32, 32);
+                        foreach (bullet b in bullets)
+                        {
+                            bulletC = new Rectangle();
+                            if (b.type == 1)
+                            {
+                                bulletC = new Rectangle((int)b.x, (int)b.y, 3, 3);
+                            }
+                            if (b.type == 2)
+                            {
+                                bulletC = new Rectangle((int)b.x, (int)b.y, 18, 9);
+                            }
+                            if (collision(ref enemyC, ref bulletC))
+                            {
+                                if (e.hp != 1)
+                                {
+                                    hitEffects.Add(new hitEffect(e.x, e.y));
+                                }
+                                b.destroy = true;
+                                e.hp -= 1;
+                            }
+                        }
+                    }
 
-            player.input(bullets);
-            player.animation();
+                    foreach (bullet b in bullets)
+                    {
+                        b.movment(particles);
+                    }
+                    foreach (explosion ex in explosions)
+                    {
+                        ex.animation();
+                    }
 
-            spaceX -= 1;
+                    player.input(bullets);
+                    player.animation();
 
-            if (spaceX == -800)
-            {
-                spaceX = 0;
-            }
-            for (int i = 0; i < bullets.Count; i++)
-            {
-                if (bullets[i].destroy)
-                {
-                    bullets.RemoveAt(i);
-                }
-            }
-            for (int i = 0; i < mechs.Count; i++)
-            {
-                if (mechs[i].destroy)
-                {
-                    mechs.RemoveAt(i);
-                }
-            }
-            for (int i = 0; i < explosions.Count; i++)
-            {
-                if (explosions[i].destroy)
-                {
-                    explosions.RemoveAt(i);
-                }
-            }
-            for (int i = 0; i < bullets.Count; i++)
-            {
-                if (bullets[i].destroy)
-                {
-                    bullets.RemoveAt(i);
-                }
-            }
-            for (int i = 0; i < enemies.Count; i++)
-            {
-                if (enemies[i].destroy)
-                {
-                    enemies.RemoveAt(i);
-                }
-            }
-            for (int i = 0; i < particles.Count; i++)
-            {
-                if (particles[i].destroy)
-                {
-                    particles.RemoveAt(i);
-                }
-            }
-            for (int i = 0; i < hitEffects.Count; i++)
-            {
-                if (hitEffects[i].destroy)
-                {
-                    hitEffects.RemoveAt(i);
-                }
-            }
+                    spaceX -= 1;
+
+                    if (spaceX == -800)
+                    {
+                        spaceX = 0;
+                    }
+                    for (int i = 0; i < bullets.Count; i++)
+                    {
+                        if (bullets[i].destroy)
+                        {
+                            bullets.RemoveAt(i);
+                        }
+                    }
+                    for (int i = 0; i < mechs.Count; i++)
+                    {
+                        if (mechs[i].destroy)
+                        {
+                            mechs.RemoveAt(i);
+                        }
+                    }
+                    for (int i = 0; i < explosions.Count; i++)
+                    {
+                        if (explosions[i].destroy)
+                        {
+                            explosions.RemoveAt(i);
+                        }
+                    }
+                    for (int i = 0; i < bullets.Count; i++)
+                    {
+                        if (bullets[i].destroy)
+                        {
+                            bullets.RemoveAt(i);
+                        }
+                    }
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        if (enemies[i].destroy)
+                        {
+                            enemies.RemoveAt(i);
+                        }
+                    }
+                    for (int i = 0; i < particles.Count; i++)
+                    {
+                        if (particles[i].destroy)
+                        {
+                            particles.RemoveAt(i);
+                        }
+                    }
+                    for (int i = 0; i < hitEffects.Count; i++)
+                    {
+                        if (hitEffects[i].destroy)
+                        {
+                            hitEffects.RemoveAt(i);
+                        }
+                    }
+                    break;
+        }
             base.Update(gameTime);
         }
 

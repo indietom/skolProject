@@ -17,6 +17,7 @@ namespace SchoolGame
         public int gunType;
         public int fireRate;
         public int score;
+        public int hp;
         public bool inputActive;
         public bool keyFalse;
         public bool buttonFalse;
