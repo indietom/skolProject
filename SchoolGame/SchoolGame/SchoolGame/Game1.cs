@@ -33,6 +33,7 @@ namespace SchoolGame
         List<enemyBullet> enemyBullets = new List<enemyBullet>();
         List<hitEffect> hitEffects = new List<hitEffect>();
         player player = new player();
+        healthBar healthBar = new healthBar();
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -91,6 +92,7 @@ namespace SchoolGame
                 case "game":
                     Rectangle playerC = new Rectangle((int)player.x + 7, (int)player.y + 9, 8, 9);
                     Rectangle bulletC;
+                    Rectangle enemyBulletC;
                     Rectangle enemyC;
                     Rectangle mechC;
 
@@ -112,6 +114,13 @@ namespace SchoolGame
                         m.movment(enemyBullets);
                         m.checkHealth(explosions, particles);
                         mechC = new Rectangle((int)m.x + 13, (int)m.y + 2, 9, 40);
+                        if (collision(ref playerC, ref mechC))
+                        {
+                            hitEffects.Add(new hitEffect(player.x, player.y));
+                            player.x -= 64;
+                            player.hp -= 1;
+                            healthBar.widht -= 30;
+                        }
                         foreach (bullet b in bullets)
                         {
                             bulletC = new Rectangle();
@@ -144,6 +153,13 @@ namespace SchoolGame
                         e.movment();
                         e.checkHealth(explosions, particles, ref player.score);
                         enemyC = new Rectangle((int)e.x, (int)e.y, 32, 32);
+                        if (collision(ref playerC, ref enemyC))
+                        {
+                            hitEffects.Add(new hitEffect(player.x, player.y));
+                            e.destroy = true;
+                            player.hp -= 1;
+                            healthBar.widht -= 30;
+                        }
                         foreach (bullet b in bullets)
                         {
                             bulletC = new Rectangle();
@@ -256,6 +272,7 @@ namespace SchoolGame
             foreach (enemy e in enemies) { e.drawSprite(spriteBatch, spritesheet); }
             foreach (hitEffect he in hitEffects) { he.drawSprite(spriteBatch, spritesheet); }
             foreach (explosion ex in explosions) { ex.drawSprite(spriteBatch, spritesheet); }
+            healthBar.drawSprite(spriteBatch, spritesheet);
             spriteBatch.End();
 
             base.Draw(gameTime);
