@@ -8,6 +8,7 @@ namespace SchoolGame
     class enemyBullet:objects
     {
         public int type;
+        float accel;
 
         public enemyBullet(float x2, float y2, int type2)
         {
@@ -17,13 +18,28 @@ namespace SchoolGame
             switch (type)
             {
                 case 1:
-                    setSpriteCoords(3, 3);
+                    setSpriteCoords(133, 10);
+                    setSize(18, 9);
+                    accel = -3f;
                     break;
             }
         }
-        public void movment()
+        public void movment(List<particle> particles)
         {
-            
+            Random random = new Random();
+            switch (type)
+            {
+                case 1:
+                    particles.Add(new particle(x, y, random.Next(350, 370), random.Next(5, 7), 1, "smoke"));
+                    x -= veclocity_x;
+                    y -= veclocity_y;
+                    if (accel <= 10f)
+                    {
+                        accel += 0.1f;
+                    }
+                    math(accel);
+                    break;
+            } 
         }
     }
 }

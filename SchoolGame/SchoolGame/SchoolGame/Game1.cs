@@ -30,6 +30,8 @@ namespace SchoolGame
         List<enemy> enemies = new List<enemy>();
         List<particle> particles = new List<particle>();
         List<mech> mechs = new List<mech>();
+        List<enemyBullet> enemyBullets = new List<enemyBullet>();
+        List<hitEffect> hitEffects = new List<hitEffect>();
         player player = new player();
         protected override void Initialize()
         {
@@ -81,6 +83,7 @@ namespace SchoolGame
             Rectangle playerC = new Rectangle((int)player.x + 7, (int)player.y + 9, 8, 9);
             Rectangle bulletC;
             Rectangle enemyC;
+            Rectangle mechC;
 
             if (keyboard.IsKeyDown(Keys.Escape))
             {
@@ -89,9 +92,39 @@ namespace SchoolGame
             
             particles.Add(new particle(player.x+7, player.y+13, ranodm.Next(-200, -160), ranodm.Next(5, 10), 1, "red"));
 
+            foreach (enemyBullet eb in enemyBullets)
+            {
+                eb.movment(particles);
+            }
+
+            foreach (hitEffect he in hitEffects)
+            {
+                he.checkLifeTime();
+            }
+
             foreach (mech m in mechs)
             {
-                m.movment();
+                m.movment(enemyBullets);
+                m.checkHealth(explosions, particles);
+                mechC = new Rectangle((int)m.x + 13, (int)m.y + 2, 9, 40);
+                foreach (bullet b in bullets)
+                {
+                    bulletC = new Rectangle();
+                    if (b.type == 1)
+                    {
+                        bulletC = new Rectangle((int)b.x, (int)b.y, 3, 3);
+                    }
+                    if (b.type == 2)
+                    {
+                        bulletC = new Rectangle((int)b.x, (int)b.y, 18, 9);
+                    }
+                    if (collision(ref mechC, ref bulletC))
+                    {
+                        hitEffects.Add(new hitEffect(m.x, m.y));
+                        b.destroy = true;
+                        m.hp -= 1;
+                    }
+                }
             }
 
             foreach (particle p in particles)
@@ -116,6 +149,7 @@ namespace SchoolGame
                     }
                     if (collision(ref enemyC, ref bulletC))
                     {
+                        hitEffects.Add(new hitEffect(e.x, e.y));
                         b.destroy = true;
                         e.hp -= 1;
                     }
@@ -147,6 +181,13 @@ namespace SchoolGame
                     bullets.RemoveAt(i);
                 }
             }
+            for (int i = 0; i < mechs.Count; i++)
+            {
+                if (mechs[i].destroy)
+                {
+                    mechs.RemoveAt(i);
+                }
+            }
             for (int i = 0; i < explosions.Count; i++)
             {
                 if (explosions[i].destroy)
@@ -175,6 +216,13 @@ namespace SchoolGame
                     particles.RemoveAt(i);
                 }
             }
+            for (int i = 0; i < hitEffects.Count; i++)
+            {
+                if (hitEffects[i].destroy)
+                {
+                    hitEffects.RemoveAt(i);
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -191,7 +239,9 @@ namespace SchoolGame
             player.drawSprite(spriteBatch, spritesheet);
             foreach (mech m in mechs) { m.drawSprite(spriteBatch, spritesheet); }
             foreach (bullet b in bullets) { b.drawSprite(spriteBatch, spritesheet); }
+            foreach (enemyBullet eb in enemyBullets) { eb.drawSprite(spriteBatch, spritesheet); }
             foreach (enemy e in enemies) { e.drawSprite(spriteBatch, spritesheet); }
+            foreach (hitEffect he in hitEffects) { he.drawSprite(spriteBatch, spritesheet); }
             foreach (explosion ex in explosions) { ex.drawSprite(spriteBatch, spritesheet); }
             spriteBatch.End();
 

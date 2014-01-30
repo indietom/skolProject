@@ -113,6 +113,7 @@
     <Compile Include="enemyBullet.cs" />
     <Compile Include="enemyManeger.cs" />
     <Compile Include="explosion.cs" />
+    <Compile Include="hitEffect.cs" />
     <Compile Include="mech.cs" />
     <Compile Include="objects.cs" />
     <Compile Include="particle.cs" />
