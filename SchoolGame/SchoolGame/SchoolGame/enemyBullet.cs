@@ -39,6 +39,11 @@ namespace SchoolGame
                     }
                     math(accel);
                     break;
+                case 2:
+                    x -= veclocity_x;
+                    y -= veclocity_y;
+                    math(11);
+                    break;
             } 
         }
     }

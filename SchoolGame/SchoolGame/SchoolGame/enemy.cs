@@ -17,6 +17,7 @@ namespace SchoolGame
             type = type2;
             setCoords(x2, y2);
             destroy = false;
+            fireRate = 0;
             switch (type)
             {
                 case 1:
@@ -51,7 +52,7 @@ namespace SchoolGame
                 destroy = true;
             }
         }
-        public void movment()
+        public void movment(List<enemyBullet> enemyBullets)
         {
             if (angle >= 360 || angle <= -360)
             {
@@ -62,7 +63,7 @@ namespace SchoolGame
                 case 1: 
                     x += veclocity_x;
                     y += veclocity_y;
-                    math(0);
+                    math(2);
                     break;
                 case 2:
                     x -= 1;
@@ -70,6 +71,17 @@ namespace SchoolGame
                     x += veclocity_x;
                     y += veclocity_y;
                     math(8);
+                    break;
+                case 3:
+                    fireRate += 1;
+                    if (fireRate == 32)
+                    {
+                        enemyBullets.Add(new enemyBullet(x + 16, y + 16, 2));
+                        fireRate = 0;
+                    }
+                    x += veclocity_x;
+                    y += veclocity_y;
+                    math(1);
                     break;
             }
         }

@@ -102,6 +102,18 @@ namespace SchoolGame
                     foreach (enemyBullet eb in enemyBullets)
                     {
                         eb.movment(particles);
+                        enemyBulletC = new Rectangle();
+                        if (eb.type == 1)
+                        {
+                            enemyBulletC = new Rectangle((int)eb.x, (int)eb.y, 18, 9);
+                        }
+                        if (collision(ref playerC, ref enemyBulletC))
+                        {
+                            hitEffects.Add(new hitEffect(player.x, player.y));
+                            player.hp -= 1;
+                            eb.destroy = true;
+                            healthBar.widht -= 30;
+                        }
                     }
 
                     foreach (hitEffect he in hitEffects)
@@ -150,7 +162,7 @@ namespace SchoolGame
                     }
                     foreach (enemy e in enemies)
                     {
-                        e.movment();
+                        e.movment(enemyBullets);
                         e.checkHealth(explosions, particles, ref player.score);
                         enemyC = new Rectangle((int)e.x, (int)e.y, 32, 32);
                         if (collision(ref playerC, ref enemyC))
@@ -206,6 +218,13 @@ namespace SchoolGame
                         if (bullets[i].destroy)
                         {
                             bullets.RemoveAt(i);
+                        }
+                    }
+                    for (int i = 0; i < enemyBullets.Count; i++)
+                    {
+                        if (enemyBullets[i].destroy)
+                        {
+                            enemyBullets.RemoveAt(i);
                         }
                     }
                     for (int i = 0; i < mechs.Count; i++)
