@@ -30,21 +30,30 @@ namespace SchoolGame
                     setSpriteCoords(1, 67);
                     angle = -90;
                     break;
+                case 3:
+                    Console.WriteLine("lol yolo");
+                    angle = -180;
+                    hp = 2;
+                    setSpriteCoords(1, 67);
+                    break;
             }
         }
-        public void checkHealth(List<explosion> explosions, List<particle> particles, ref int score)
+        public void checkHealth(List<explosion> explosions, List<particle> particles, ref int score, List<textEffect> textEffects)
         {
             if (hp <= 0)
             {
                 switch (type)
                 {
                     case 1:
+                        textEffects.Add(new textEffect(x, y, 1, "+1000"));
                         score += 1000;
                         break;
                     case 2:
+                        textEffects.Add(new textEffect(x, y, 1, "+2000"));
                         score += 2000;
                         break;
                     case 3:
+                        textEffects.Add(new textEffect(x, y, 1, "+3000"));
                         score += 3000;
                         break;
                 }

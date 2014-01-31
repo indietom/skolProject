@@ -32,6 +32,7 @@ namespace SchoolGame
         List<mech> mechs = new List<mech>();
         List<enemyBullet> enemyBullets = new List<enemyBullet>();
         List<hitEffect> hitEffects = new List<hitEffect>();
+        List<textEffect> textEffects = new List<textEffect>();
         player player = new player();
         healthBar healthBar = new healthBar();
         enemyManeger enemyManeger = new enemyManeger();
@@ -44,12 +45,14 @@ namespace SchoolGame
 
         Texture2D spritesheet;
         Texture2D space;
+        SpriteFont font;
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spritesheet = Content.Load<Texture2D>("spritesheet");
             space = Content.Load<Texture2D>("space");
+            font = Content.Load<SpriteFont>("font");
             // TODO: use this.Content to load your game content here
         }
 
@@ -76,6 +79,7 @@ namespace SchoolGame
         int spaceX = 0;
         public string gameState = "game";
         int level = 1;
+        float time = 0f;
         protected override void Update(GameTime gameTime)
         {
             Random ranodm = new Random();
@@ -92,12 +96,21 @@ namespace SchoolGame
             switch(gameState)
             {
                 case "game":
+                    time += 0.01f;
+
+                    if (time >= 10f*(float)level && level != 5)
+                    {
+                        level += 1;
+                        time = 0f;
+                    }
+
+                    Console.WriteLine(time);
+
                     Rectangle playerC = new Rectangle((int)player.x + 7, (int)player.y + 9, 8, 9);
                     Rectangle bulletC;
                     Rectangle enemyBulletC;
                     Rectangle enemyC;
                     Rectangle mechC;
-
 
                     particles.Add(new particle(player.x + 7, player.y + 13, ranodm.Next(-200, -160), ranodm.Next(5, 10), 1, "red"));
 
@@ -111,7 +124,18 @@ namespace SchoolGame
                         {
                             enemyBulletC = new Rectangle((int)eb.x, (int)eb.y, 18, 9);
                         }
-                        if (collision(ref playerC, ref enemyBulletC))
+                        if (eb.type == 2)
+                        {
+                            enemyBulletC = new Rectangle((int)eb.x, (int)eb.y, 3, 3);
+                        }
+                        if (collision(ref playerC, ref enemyBulletC) && eb.type == 1)
+                        {
+                            hitEffects.Add(new hitEffect(player.x, player.y));
+                            player.hp -= 3;
+                            eb.destroy = true;
+                            healthBar.widht -= 30*3;
+                        }
+                        if (collision(ref playerC, ref enemyBulletC) && eb.type == 2)
                         {
                             hitEffects.Add(new hitEffect(player.x, player.y));
                             player.hp -= 1;
@@ -148,7 +172,7 @@ namespace SchoolGame
                             {
                                 bulletC = new Rectangle((int)b.x, (int)b.y, 18, 9);
                             }
-                            if (collision(ref mechC, ref bulletC))
+                            if (collision(ref mechC, ref bulletC) && b.type == 1)
                             {
                                 if (m.hp != 1)
                                 {
@@ -157,6 +181,15 @@ namespace SchoolGame
                                 b.destroy = true;
                                 m.hp -= 1;
                             }
+                            if (collision(ref mechC, ref bulletC) && b.type == 2)
+                            {
+                                if (m.hp != 1)
+                                {
+                                    hitEffects.Add(new hitEffect(m.x, m.y));
+                                }
+                                b.destroy = true;
+                                m.hp -= 3;
+                            }
                         }
                     }
 
@@ -164,10 +197,14 @@ namespace SchoolGame
                     {
                         p.movment();
                     }
+                    foreach (textEffect te in textEffects)
+                    {
+                        te.update();
+                    }
                     foreach (enemy e in enemies)
                     {
                         e.movment(enemyBullets);
-                        e.checkHealth(explosions, particles, ref player.score);
+                        e.checkHealth(explosions, particles, ref player.score, textEffects);
                         enemyC = new Rectangle((int)e.x, (int)e.y, 32, 32);
                         if (collision(ref playerC, ref enemyC))
                         {
@@ -187,7 +224,7 @@ namespace SchoolGame
                             {
                                 bulletC = new Rectangle((int)b.x, (int)b.y, 18, 9);
                             }
-                            if (collision(ref enemyC, ref bulletC))
+                            if (collision(ref enemyC, ref bulletC) && b.type == 1)
                             {
                                 if (e.hp != 1)
                                 {
@@ -195,6 +232,15 @@ namespace SchoolGame
                                 }
                                 b.destroy = true;
                                 e.hp -= 1;
+                            }
+                            if (collision(ref enemyC, ref bulletC) && b.type == 2)
+                            {
+                                if (e.hp != 1)
+                                {
+                                    hitEffects.Add(new hitEffect(e.x, e.y));
+                                }
+                                b.destroy = true;
+                                e.hp -= 3;
                             }
                         }
                     }
@@ -296,6 +342,9 @@ namespace SchoolGame
             foreach (hitEffect he in hitEffects) { he.drawSprite(spriteBatch, spritesheet); }
             foreach (explosion ex in explosions) { ex.drawSprite(spriteBatch, spritesheet); }
             healthBar.drawSprite(spriteBatch, spritesheet);
+            foreach (textEffect te in textEffects) { te.draw(spriteBatch, font); }
+            spriteBatch.DrawString(font, "Score: " + player.score.ToString(), new Vector2(10, 64), Color.White);
+            spriteBatch.DrawString(font, "Level: " + level.ToString(), new Vector2(10, 124), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

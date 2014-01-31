@@ -22,6 +22,11 @@ namespace SchoolGame
                     setSize(18, 9);
                     accel = -3f;
                     break;
+                case 2:
+                    setSpriteCoords(100, 4);
+                    setSize(3, 3);
+                    accel = -3f;
+                    break;
             }
         }
         public void movment(List<particle> particles)
