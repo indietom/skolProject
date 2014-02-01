@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace SchoolGame
 {
@@ -29,7 +36,12 @@ namespace SchoolGame
                     break;
             }
         }
-        public void checkHealth(List<astroid> astroids, List<explosion> explosions, List<particle> particles)
+        public void movment()
+        {
+            x += veclocity_x;
+            y += veclocity_y;
+        }
+        public void checkHealth(List<astroid> astroids, List<explosion> explosions, List<particle> particles, SoundEffect explosionSFX)
         {
             if (hp <= 0 && size == 32)
             {
@@ -45,7 +57,7 @@ namespace SchoolGame
             }
             if (hp <= 0 && size == 8)
             {
-                explosions.Add(new explosion(x - 16, y - 16, particles));
+                explosions.Add(new explosion(x - 16, y - 16, particles, explosionSFX));
                 destroy = true;
             }
         }

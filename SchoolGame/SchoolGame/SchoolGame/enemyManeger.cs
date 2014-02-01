@@ -72,7 +72,6 @@ namespace SchoolGame
                     {
                         mechs.Add(new mech());
                     }
-                    spawnEnemy = 0;
                 }
                 if (spawnEnemy == 32 * 3 + 16)
                 {
@@ -92,7 +91,6 @@ namespace SchoolGame
                     {
                         mechs.Add(new mech());
                     }
-                    spawnEnemy = 0;
                 }
                 if (spawnEnemy == 32 * 2 + 16)
                 {
@@ -107,12 +105,7 @@ namespace SchoolGame
                 }
                 if (spawnEnemy == 2 * 2 && mechs.Count() < 1)
                 {
-                    ifSpawnMech = random.Next(1, 3);
-                    if (ifSpawnMech == 1)
-                    {
-                        mechs.Add(new mech());
-                    }
-                    spawnEnemy = 0;
+                    mechs.Add(new mech());
                 }
                 if (spawnEnemy == 2 * 2 + 4)
                 {

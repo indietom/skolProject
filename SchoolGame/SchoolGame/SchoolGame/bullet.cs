@@ -33,6 +33,10 @@ namespace SchoolGame
         public void movment(List<particle> particles)
         {
             Random random = new Random();
+            if (x < 0 || x > 800)
+            {
+                destroy = true;
+            }
             switch (type)
             {
                 case 1:

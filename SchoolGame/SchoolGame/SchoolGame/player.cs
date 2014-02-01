@@ -34,6 +34,7 @@ namespace SchoolGame
             animationActive = true;
             animationCount = 0;
             buttonFalse = false;
+            hp = 10;
         }
         public void animation()
         {
@@ -132,19 +133,19 @@ namespace SchoolGame
                         buttonFalse = false;
                     }
                 }
-                if ( x < 800-37 && keyboard.IsKeyDown(Keys.Right) || gamePad.DPad.Right == ButtonState.Pressed && x < 800-37)
+                if ( x < 800-37 && keyboard.IsKeyDown(Keys.Right) || gamePad.ThumbSticks.Left.X == 1.0f && x < 800-37)
                 {
                     x += 5;
                 }
-                if (x > 0 && keyboard.IsKeyDown(Keys.Left) || gamePad.DPad.Left == ButtonState.Pressed && x > 0)
+                if (x > 0 && keyboard.IsKeyDown(Keys.Left) ||gamePad.ThumbSticks.Left.X == -1.0f && x > 0)
                 {
                     x -= 5;
                 }
-                if (y > 0 && keyboard.IsKeyDown(Keys.Up) || gamePad.DPad.Up == ButtonState.Pressed && y > 0)
+                if (y > 0 && keyboard.IsKeyDown(Keys.Up) || gamePad.ThumbSticks.Left.Y == 1.0f && y > 0)
                 {
                     y -= 5;
                 }
-                if (y < 480 - 37 && keyboard.IsKeyDown(Keys.Down) || gamePad.DPad.Down == ButtonState.Pressed && y < 480 - 37)
+                if (y < 480 - 37 && keyboard.IsKeyDown(Keys.Down) || gamePad.ThumbSticks.Left.Y == -1.0f && y < 480 - 37)
                 {
                     y += 5;
                 }

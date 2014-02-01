@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace SchoolGame
 {
@@ -19,11 +26,11 @@ namespace SchoolGame
             fireRate = 0;
             hp = 5;
         }
-        public void checkHealth(List<explosion> explosions, List<particle> particles)
+        public void checkHealth(List<explosion> explosions, List<particle> particles, SoundEffect explosionSFX)
         {
             if (hp <= 0)
             {
-                explosions.Add(new explosion(x, y, particles));
+                explosions.Add(new explosion(x, y, particles, explosionSFX));
                 destroy = true;
             }
         }
