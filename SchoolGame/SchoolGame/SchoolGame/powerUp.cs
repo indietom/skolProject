@@ -8,18 +8,24 @@ namespace SchoolGame
     class powerUp:objects
     {
         public int type;
+        public int subType;
 
         public void movment()
         {
             x -= 3;
+            if (x < 0)
+            {
+                destroy = true;
+            }
         }
 
         public powerUp()
         {
             Random random = new Random();
-            setCoords(random.Next(32, 800), random.Next(32, 480));
+            setCoords(random.Next(850, 950), random.Next(32, 480-32));
             setSize(16, 16);
-            type = random.Next(1, 5);
+            type = random.Next(1, 4);
+            destroy = false;
             switch (type)
             {
                 case 1:
@@ -27,6 +33,7 @@ namespace SchoolGame
                     break;
                 case 2:
                     setSpriteCoords(50,34);
+                    subType = random.Next(1, 4);
                     break;
                 case 3:
                     setSpriteCoords(34, 50);

@@ -32,7 +32,9 @@ namespace SchoolGame
         List<mech> mechs = new List<mech>();
         List<enemyBullet> enemyBullets = new List<enemyBullet>();
         List<hitEffect> hitEffects = new List<hitEffect>();
+        List<powerUp> powerUps = new List<powerUp>();
         List<textEffect> textEffects = new List<textEffect>();
+        powerUpManeger powerUpManeger = new powerUpManeger();
         player player = new player();
         healthBar healthBar = new healthBar();
         enemyManeger enemyManeger = new enemyManeger();
@@ -45,6 +47,7 @@ namespace SchoolGame
 
         Texture2D spritesheet;
         Texture2D space;
+        Texture2D menuGfx;
         SoundEffect explosionSFX;
         SpriteFont font;
         protected override void LoadContent()
@@ -53,6 +56,7 @@ namespace SchoolGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             spritesheet = Content.Load<Texture2D>("spritesheet");
             space = Content.Load<Texture2D>("space");
+            menuGfx = Content.Load<Texture2D>("Menu");
             font = Content.Load<SpriteFont>("font");
             explosionSFX = Content.Load<SoundEffect>("explosion");
             // TODO: use this.Content to load your game content here
@@ -79,10 +83,11 @@ namespace SchoolGame
             return true;
         }
         int spaceX = 0;
-        string gameState = "game";
+        string gameState = "menu";
         int level = 1;
         float time = 0f;
         int highScore = 0;
+        int countToGameOver = 0;
 
         public void checkHighscore()
         {
@@ -148,6 +153,7 @@ namespace SchoolGame
                     Rectangle enemyBulletC;
                     Rectangle enemyC;
                     Rectangle mechC;
+                    Rectangle powerUpsC;
 
                     particles.Add(new particle(player.x + 7, player.y + 13, ranodm.Next(-200, -160), ranodm.Next(5, 10), 1, "red"));
 
@@ -155,7 +161,52 @@ namespace SchoolGame
 
                     if (player.hp <= 0)
                     {
-                        gameState = "gameover";
+                        countToGameOver += 1;
+                        player.inputActive = false;
+                        player.x += 4;
+                        player.y += 2;
+                        if (countToGameOver >= 64 * 3)
+                        {
+                            gameState = "gameover";
+                            countToGameOver = 0;
+                        }
+                    }
+
+                    powerUpManeger.update(powerUps);
+
+                    foreach(powerUp pu in powerUps)
+                    {
+                        pu.movment();
+                        powerUpsC = new Rectangle((int)pu.x, (int)pu.y, 16, 16);
+                        if (collision(ref playerC, ref powerUpsC))
+                        {
+                            if (pu.type == 1)
+                            {
+                                player.score += 10000;
+                            }
+                            if (pu.type == 2)
+                            {
+                                player.countPowerUp = 1;
+                                switch (pu.subType)
+                                {
+                                    case 1:
+                                        player.gunType = 2;
+                                        break;
+                                    case 2:
+                                        player.gunType = 3;
+                                        break;
+                                    case 3:
+                                        player.gunType = 4;
+                                        break;
+                                }
+                            }
+                            if (pu.type == 3 && player.hp <= 9)
+                            {
+                                player.hp += 1;
+                                healthBar.widht += 30;
+                            }
+                            pu.destroy = true;
+                        }
                     }
 
                     foreach (enemyBullet eb in enemyBullets)
@@ -298,6 +349,7 @@ namespace SchoolGame
 
                     player.input(bullets);
                     player.animation();
+                    player.checkPowerUp();
 
                     spaceX -= 1;
 
@@ -361,6 +413,13 @@ namespace SchoolGame
                             hitEffects.RemoveAt(i);
                         }
                     }
+                    for (int i = 0; i < powerUps.Count; i++)
+                    {
+                        if (powerUps[i].destroy)
+                        {
+                            powerUps.RemoveAt(i);
+                        }
+                    }
                     break;
         }
             base.Update(gameTime);
@@ -377,13 +436,17 @@ namespace SchoolGame
             switch(gameState)
             {
                 case "menu":
+                    IsMouseVisible = true;
                     spriteBatch.Draw(space, new Vector2(spaceX, 0), Color.White);
+                    spriteBatch.Draw(menuGfx, new Vector2(0, 0), Color.White);
+                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650, 94), Color.White);
                     break;
                 case "gameover":
                     spriteBatch.Draw(space, new Vector2(spaceX, 0), Color.White);
                     spriteBatch.DrawString(font, "Game Over", new Vector2(350, 140), Color.Red);
                     spriteBatch.DrawString(font, "Press 'x' to restart", new Vector2(350, 240), Color.White);
                     spriteBatch.DrawString(font, "Score: " + player.score.ToString(), new Vector2(10, 64), Color.White);
+                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650, 64), Color.White);
                     if (player.score == highScore)
                     {
                         spriteBatch.DrawString(font, "New Highscore!", new Vector2(10, 84), Color.Yellow);
@@ -397,15 +460,16 @@ namespace SchoolGame
                     foreach (bullet b in bullets) { b.drawSprite(spriteBatch, spritesheet); }
                     foreach (enemyBullet eb in enemyBullets) { eb.drawSprite(spriteBatch, spritesheet); }
                     foreach (enemy e in enemies) { e.drawSprite(spriteBatch, spritesheet); }
+                    foreach (powerUp pu in powerUps) { pu.drawSprite(spriteBatch, spritesheet); }
                     foreach (hitEffect he in hitEffects) { he.drawSprite(spriteBatch, spritesheet); }
                     foreach (explosion ex in explosions) { ex.drawSprite(spriteBatch, spritesheet); }
                     healthBar.drawSprite(spriteBatch, spritesheet);
                     foreach (textEffect te in textEffects) { te.draw(spriteBatch, font); }
                     spriteBatch.DrawString(font, "Score: " + player.score.ToString(), new Vector2(10, 64), Color.White);
+                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650, 64), Color.White);
                     spriteBatch.DrawString(font, "Level: " + level.ToString(), new Vector2(10, 124), Color.White);
                     break;
         }
-            spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650, 64), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

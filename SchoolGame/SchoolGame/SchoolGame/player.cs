@@ -17,10 +17,10 @@ namespace SchoolGame
         public int gunType;
         public int fireRate;
         public int score;
-        public int hp;
         public bool inputActive;
         public bool keyFalse;
         public bool buttonFalse;
+        public int countPowerUp;
 
         public player()
         {
@@ -35,6 +35,19 @@ namespace SchoolGame
             animationCount = 0;
             buttonFalse = false;
             hp = 10;
+            countPowerUp = 0;
+        }
+        public void checkPowerUp()
+        {
+            if (countPowerUp >= 1)
+            {
+                countPowerUp += 1;
+                if (countPowerUp >= 64 * 5)
+                {
+                    gunType = 1;
+                    countPowerUp = 0;
+                }
+            }
         }
         public void animation()
         {
