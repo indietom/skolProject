@@ -101,11 +101,11 @@ namespace SchoolGame
             }
             if (level == 5)
             {
-                if (spawnEnemy == 2)
+                if (spawnEnemy == 5)
                 {
                     enemies.Add(new enemy(random.Next(850, 950), random.Next(0, 480 - 32), random.Next(1, 4)));
                 }
-                if (spawnEnemy == 2 * 2 && mechs.Count() < 1)
+                if (spawnEnemy == 5 * 2 && mechs.Count() < 1)
                 {
                     mechs.Add(new mech());
                 }

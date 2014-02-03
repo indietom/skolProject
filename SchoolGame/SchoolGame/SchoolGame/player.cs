@@ -28,7 +28,7 @@ namespace SchoolGame
             setSize(32, 32);
             setSpriteCoords(1, 1);
             inputActive = true;
-            gunType = 3;
+            gunType = 1;
             score = 0;
             fireRate = 0;
             animationActive = true;
