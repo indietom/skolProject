@@ -26,11 +26,13 @@ namespace SchoolGame
             fireRate = 0;
             hp = 5;
         }
-        public void checkHealth(List<explosion> explosions, List<particle> particles, SoundEffect explosionSFX)
+        public void checkHealth(List<explosion> explosions, List<particle> particles, SoundEffect explosionSFX, ref int score, List<textEffect> textEffects)
         {
             if (hp <= 0)
             {
+                textEffects.Add(new textEffect(x, y, 1, "+20000"));
                 explosions.Add(new explosion(x, y, particles, explosionSFX));
+                score += 20000;
                 destroy = true;
             }
         }

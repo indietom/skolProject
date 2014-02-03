@@ -81,19 +81,20 @@ namespace SchoolGame
             }
             if (level == 4)
             {
-                if (spawnEnemy == 32)
+                if (spawnEnemy == 32 * 2)
                 {
                     enemies.Add(new enemy(random.Next(850, 950), random.Next(0, 480 - 32), random.Next(1, 4)));
                 }
-                if (spawnEnemy == 32 * 2 && mechs.Count() < 1)
+                if (spawnEnemy == 32 * 3 && mechs.Count() < 1)
                 {
                     ifSpawnMech = random.Next(1, 3);
                     if (ifSpawnMech == 1)
                     {
                         mechs.Add(new mech());
                     }
+                    spawnEnemy = 0;
                 }
-                if (spawnEnemy == 32 * 2 + 16)
+                if (spawnEnemy == 32 * 3 + 16)
                 {
                     spawnEnemy = 0;
                 }

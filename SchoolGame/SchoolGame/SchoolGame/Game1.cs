@@ -123,6 +123,7 @@ namespace SchoolGame
                     enemyBullets.Clear();
                     particles.Clear();
                     mechs.Clear();
+                    powerUps.Clear();
                     if (keyboard.IsKeyDown(Keys.Enter))
                     {
                         gameState = "game";
@@ -165,6 +166,8 @@ namespace SchoolGame
                         player.inputActive = false;
                         player.x += 4;
                         player.y += 2;
+                        explosions.Add(new explosion(player.x, player.y, particles, explosionSFX));
+                        particles.Add(new particle(player.x + 16, player.y + 16, ranodm.Next(360), ranodm.Next(5,10), 1, "smoke"));
                         if (countToGameOver >= 64 * 3)
                         {
                             gameState = "gameover";
@@ -245,7 +248,7 @@ namespace SchoolGame
                     foreach (mech m in mechs)
                     {
                         m.movment(enemyBullets);
-                        m.checkHealth(explosions, particles, explosionSFX);
+                        m.checkHealth(explosions, particles, explosionSFX, ref player.score, textEffects);
                         mechC = new Rectangle((int)m.x + 13, (int)m.y + 2, 9, 40);
                         if (collision(ref playerC, ref mechC))
                         {
@@ -446,7 +449,7 @@ namespace SchoolGame
                     spriteBatch.DrawString(font, "Game Over", new Vector2(350, 140), Color.Red);
                     spriteBatch.DrawString(font, "Press 'x' to restart", new Vector2(350, 240), Color.White);
                     spriteBatch.DrawString(font, "Score: " + player.score.ToString(), new Vector2(10, 64), Color.White);
-                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650, 64), Color.White);
+                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650-20, 64), Color.White);
                     if (player.score == highScore)
                     {
                         spriteBatch.DrawString(font, "New Highscore!", new Vector2(10, 84), Color.Yellow);
@@ -466,7 +469,7 @@ namespace SchoolGame
                     healthBar.drawSprite(spriteBatch, spritesheet);
                     foreach (textEffect te in textEffects) { te.draw(spriteBatch, font); }
                     spriteBatch.DrawString(font, "Score: " + player.score.ToString(), new Vector2(10, 64), Color.White);
-                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650, 64), Color.White);
+                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650-20, 64), Color.White);
                     spriteBatch.DrawString(font, "Level: " + level.ToString(), new Vector2(10, 124), Color.White);
                     break;
         }
