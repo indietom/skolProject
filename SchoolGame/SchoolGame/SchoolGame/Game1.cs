@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -8,6 +10,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using System.Text;
 
 namespace SchoolGame
 {
@@ -41,6 +44,9 @@ namespace SchoolGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            StreamReader highscoreFileReader = new StreamReader("highscore.txt", Encoding.UTF8);
+            highScore = int.Parse(highscoreFileReader.ReadToEnd());
+            highscoreFileReader.Close();
             mechs.Add(new mech());
             base.Initialize();
         }
@@ -94,6 +100,9 @@ namespace SchoolGame
             if (player.score >= highScore)
             {
                 highScore = player.score;
+                System.IO.StreamWriter highscoreFile = new System.IO.StreamWriter("highscore.txt");
+                highscoreFile.WriteLine(highScore.ToString());
+                highscoreFile.Close();
             }
         }
 
@@ -442,7 +451,7 @@ namespace SchoolGame
                     IsMouseVisible = true;
                     spriteBatch.Draw(space, new Vector2(spaceX, 0), Color.White);
                     spriteBatch.Draw(menuGfx, new Vector2(0, 0), Color.White);
-                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650, 94), Color.White);
+                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650-40, 94), Color.White);
                     break;
                 case "gameover":
                     spriteBatch.Draw(space, new Vector2(spaceX, 0), Color.White);

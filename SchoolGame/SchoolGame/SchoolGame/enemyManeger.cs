@@ -24,7 +24,7 @@ namespace SchoolGame
             {
                 if (spawnEnemy == 32*5)
                 {
-                    enemies.Add(new enemy(random.Next(850, 950), random.Next(0, 480 - 32), 1));
+                    enemies.Add(new enemy(random.Next(850, 950), random.Next(0, 480 - 32), random.Next(1,4)));
                 }
                 if (spawnEnemy == 32 * 5 + 16 && mechs.Count() < 1)
                 {
