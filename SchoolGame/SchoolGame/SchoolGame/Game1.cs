@@ -449,7 +449,7 @@ namespace SchoolGame
                     spriteBatch.DrawString(font, "Game Over", new Vector2(350, 140), Color.Red);
                     spriteBatch.DrawString(font, "Press 'x' to restart", new Vector2(350, 240), Color.White);
                     spriteBatch.DrawString(font, "Score: " + player.score.ToString(), new Vector2(10, 64), Color.White);
-                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650-20, 64), Color.White);
+                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650-40, 64), Color.White);
                     if (player.score == highScore)
                     {
                         spriteBatch.DrawString(font, "New Highscore!", new Vector2(10, 84), Color.Yellow);
@@ -469,7 +469,7 @@ namespace SchoolGame
                     healthBar.drawSprite(spriteBatch, spritesheet);
                     foreach (textEffect te in textEffects) { te.draw(spriteBatch, font); }
                     spriteBatch.DrawString(font, "Score: " + player.score.ToString(), new Vector2(10, 64), Color.White);
-                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650-20, 64), Color.White);
+                    spriteBatch.DrawString(font, "Highscore: " + highScore.ToString(), new Vector2(650-40, 64), Color.White);
                     spriteBatch.DrawString(font, "Level: " + level.ToString(), new Vector2(10, 124), Color.White);
                     break;
         }

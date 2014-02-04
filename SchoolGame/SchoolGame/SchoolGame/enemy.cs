@@ -79,6 +79,14 @@ namespace SchoolGame
                 case 1: 
                     x += veclocity_x;
                     y += veclocity_y;
+                    if (y > 0)
+                    {
+                        angle = -140;
+                    }
+                    if (y < 480 - 32)
+                    {
+                        angle = -220;
+                    }
                     math(2);
                     break;
                 case 2:
