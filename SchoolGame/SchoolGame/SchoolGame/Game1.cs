@@ -154,6 +154,7 @@ namespace SchoolGame
                     {
                         level += 1;
                         time = 0f;
+                        enemyManeger.spawnEnemy = 0;
                     }
 
                     Console.WriteLine(time);
