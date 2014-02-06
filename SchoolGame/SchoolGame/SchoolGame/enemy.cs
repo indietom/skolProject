@@ -38,10 +38,9 @@ namespace SchoolGame
                     angle = -90;
                     break;
                 case 3:
-                    Console.WriteLine("lol yolo");
                     angle = -180;
                     hp = 2;
-                    setSpriteCoords(1, 67);
+                    setSpriteCoords(1, 34);
                     break;
             }
         }

@@ -176,7 +176,6 @@ namespace SchoolGame
                         player.inputActive = false;
                         player.x += 4;
                         player.y += 2;
-                        explosions.Add(new explosion(player.x, player.y, particles, explosionSFX));
                         particles.Add(new particle(player.x + 16, player.y + 16, ranodm.Next(360), ranodm.Next(5,10), 1, "smoke"));
                         if (countToGameOver >= 64 * 3)
                         {
