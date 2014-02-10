@@ -55,6 +55,8 @@ namespace SchoolGame
         Texture2D space;
         Texture2D menuGfx;
         SoundEffect explosionSFX;
+        SoundEffect power_up_sfx;
+        SoundEffect shoot_sfx;
         SpriteFont font;
         protected override void LoadContent()
         {
@@ -65,6 +67,8 @@ namespace SchoolGame
             menuGfx = Content.Load<Texture2D>("Menu");
             font = Content.Load<SpriteFont>("font");
             explosionSFX = Content.Load<SoundEffect>("explosion");
+            power_up_sfx = Content.Load<SoundEffect>("power_up_sfx");
+            shoot_sfx = Content.Load<SoundEffect>("shoot"); 
             // TODO: use this.Content to load your game content here
         }
 
@@ -192,6 +196,7 @@ namespace SchoolGame
                         powerUpsC = new Rectangle((int)pu.x, (int)pu.y, 16, 16);
                         if (collision(ref playerC, ref powerUpsC))
                         {
+                            power_up_sfx.Play();
                             if (pu.type == 1)
                             {
                                 player.score += 10000;
@@ -359,7 +364,7 @@ namespace SchoolGame
                         ex.animation();
                     }
 
-                    player.input(bullets);
+                    player.input(bullets, shoot_sfx);
                     player.animation();
                     player.checkPowerUp();
 

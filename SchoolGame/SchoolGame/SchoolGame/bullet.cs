@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.GamerServices;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace SchoolGame
 {
@@ -10,8 +17,9 @@ namespace SchoolGame
         public int type;
         public float accel;
 
-        public bullet(float x2, float y2, int type2, float angle3)
+        public bullet(float x2, float y2, int type2, float angle3, SoundEffect shoot_sfx)
         {
+            shoot_sfx.Play();
             setCoords(x2, y2);
             angle = angle3;
             accel = 0f;

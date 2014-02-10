@@ -68,7 +68,7 @@ namespace SchoolGame
                 }
             }
         }
-        public void input(List<bullet> bullets) 
+        public void input(List<bullet> bullets, SoundEffect shoot_sfx) 
         {
             KeyboardState keyboard = Keyboard.GetState();
             GamePadState gamePad = GamePad.GetState(PlayerIndex.One);
@@ -76,51 +76,51 @@ namespace SchoolGame
             {
                 if (keyboard.IsKeyDown(Keys.X) && gunType == 1 && !keyFalse && fireRate == 0)
                 {
-                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0, shoot_sfx));
                     fireRate = 1;
                     keyFalse = true;
                 }
                 if (keyboard.IsKeyDown(Keys.X) && gunType == 4 && !keyFalse && fireRate == 0)
                 {
-                    bullets.Add(new bullet(x + 13, y + 13, 2, 0));
+                    bullets.Add(new bullet(x + 13, y + 13, 2, 0, shoot_sfx));
                     fireRate = 1;
                     keyFalse = true;
                 }
                 if (gamePad.Buttons.A == ButtonState.Pressed && gunType == 1 && !buttonFalse && fireRate == 0)
                 {
-                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0, shoot_sfx));
                     fireRate = 1;
                     buttonFalse = true;
                 }
                 if (gamePad.Buttons.A == ButtonState.Pressed && gunType == 4 && !buttonFalse && fireRate == 0)
                 {
-                    bullets.Add(new bullet(x + 13, y + 13,2, 0));
+                    bullets.Add(new bullet(x + 13, y + 13, 2, 0, shoot_sfx));
                     fireRate = 1;
                     buttonFalse = true;
                 }
                 if (keyboard.IsKeyDown(Keys.X) && gunType == 2 && !keyFalse && fireRate == 0)
                 {
-                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
-                    bullets.Add(new bullet(x + 13, y + 13, 1, -25));
-                    bullets.Add(new bullet(x + 13, y + 13, 1, 25));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0, shoot_sfx));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, -25, shoot_sfx));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 25, shoot_sfx));
                     fireRate = 1;
                     keyFalse = true;
                 }
                 if (keyboard.IsKeyDown(Keys.X) && gunType == 3 && fireRate == 0)
                 {
-                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0, shoot_sfx));
                     fireRate = 20;
                 }
                 if (gamePad.Buttons.A == ButtonState.Pressed && gunType == 3 && fireRate == 0)
                 {
-                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0, shoot_sfx));
                     fireRate = 20;
                 }
                 if (gamePad.Buttons.A == ButtonState.Pressed && gunType == 2 && !buttonFalse && fireRate == 0)
                 {
-                    bullets.Add(new bullet(x + 13, y + 13, 1, 0));
-                    bullets.Add(new bullet(x + 13, y + 13, 1, -25));
-                    bullets.Add(new bullet(x + 13, y + 13, 1, 25));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 0, shoot_sfx));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, -25, shoot_sfx));
+                    bullets.Add(new bullet(x + 13, y + 13, 1, 25, shoot_sfx));
                     fireRate = 1;
                     buttonFalse = true;
                 }
